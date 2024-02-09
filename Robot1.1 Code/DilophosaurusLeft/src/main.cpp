@@ -91,12 +91,10 @@ void autonomous(){
 void userControl(){
   Left.setVelocity(100, percent);
   Right.setVelocity(100, percent);
-  RWing.setStopping(hold);
-  LWing.setStopping(hold);
   while (true) {
     // Tank drive control with Controller1
-    Left.spin(forward, Controller1.Axis2.position(), percent);
-    Right.spin(forward, Controller1.Axis3.position(), percent);
+    Left.spin(forward, Controller1.Axis3.position(), percent);
+    Right.spin(forward, Controller1.Axis2.position(), percent);
     if(Controller1.ButtonR1.pressing()){
       thread Wings(WingsOpen);
     } else if(Controller1.ButtonR2.pressing()){
