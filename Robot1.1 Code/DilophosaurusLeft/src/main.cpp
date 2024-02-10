@@ -5,13 +5,13 @@ using namespace vex;
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
-// Left                 motor_group   1, 9            
-// Right                motor_group   20, 10          
-// Arm                  motor         12              
+// Left                 motor_group   4, 5            
+// Right                motor_group   7, 6            
+// Arm                  motor         1               
 // Controller1          controller                    
 // Flywheel             motor         11              
 // RWing                motor         3               
-// LWing                motor         5               
+// LWing                motor         2               
 // Pneumatic            digital_out   A               
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
@@ -128,6 +128,8 @@ int main() {
   RWing.setPosition(0, degrees);
   LWing.setPosition(0, degrees);
   Arm.setStopping(hold);
+  // RWing.setStopping(hold);
+  // LWing.setStopping(hold);
   Competition.autonomous(autonomous);
   Competition.drivercontrol(userControl);  
 }
