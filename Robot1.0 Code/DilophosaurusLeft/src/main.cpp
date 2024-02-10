@@ -5,13 +5,13 @@ using namespace vex;
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
-// Left                 motor_group   1, 9            
-// Right                motor_group   20, 10          
-// Arm                  motor         12              
+// Left                 motor_group   4, 5            
+// Right                motor_group   7, 6            
+// Arm                  motor         1               
 // Controller1          controller                    
 // Flywheel             motor         11              
 // RWing                motor         3               
-// LWing                motor         5               
+// LWing                motor         2               
 // Pneumatic            digital_out   A               
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
@@ -91,12 +91,10 @@ void autonomous(){
 void userControl(){
   Left.setVelocity(100, percent);
   Right.setVelocity(100, percent);
-  RWing.setStopping(hold);
-  LWing.setStopping(hold);
   while (true) {
     // Tank drive control with Controller1
-    Left.spin(forward, Controller1.Axis2.position(), percent);
-    Right.spin(forward, Controller1.Axis3.position(), percent);
+    Left.spin(forward, Controller1.Axis3.position(), percent);
+    Right.spin(forward, Controller1.Axis2.position(), percent);
     if(Controller1.ButtonR1.pressing()){
       thread Wings(WingsOpen);
     } else if(Controller1.ButtonR2.pressing()){
@@ -130,6 +128,8 @@ int main() {
   RWing.setPosition(0, degrees);
   LWing.setPosition(0, degrees);
   Arm.setStopping(hold);
+  // RWing.setStopping(hold);
+  // LWing.setStopping(hold);
   Competition.autonomous(autonomous);
   Competition.drivercontrol(userControl);  
 }
