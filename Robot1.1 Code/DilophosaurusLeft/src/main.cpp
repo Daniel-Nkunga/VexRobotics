@@ -18,11 +18,8 @@ using namespace vex;
 competition Competition;
 
 //Threading
-void L_TRThreadFunction90(){ //Naming Scheme [Motor Side]_[Turning Direction]
-  Left.spinFor(reverse, 680, degrees);
-}
 void R_TRThreadFunction90(){
-  Right.spinFor(forward, 680, degrees);
+  Right.spinFor(reverse, 680, degrees);
 }
 void R_TRThreadFunction70(){
   Right.spinFor(forward, 650, degrees);
@@ -34,7 +31,7 @@ void R_TLThreadFunction90(){
   Right.spinFor(reverse, 700, degrees);
 }
 void R_DFThreadFunction(){
-  Right.spinFor(forward, 700, degrees);
+  Right.spinFor(forward, 1425, degrees);
 }
 void R_DRLThreadFunction(){
   Right.spinFor(reverse,1200, degrees);
@@ -47,10 +44,10 @@ void RWingClose() {
   RWing.spin(reverse);
 }
 void LWingOpen() {
-  LWing.spin(forward);
+  LWing.spin(reverse);
 }
 void LWingClose() {
-  LWing.spin(reverse);
+  LWing.spin(forward);
 }
 
 void LWingTaskFunction() {
@@ -77,15 +74,15 @@ void ArmLower(){
 void autonomous(){
   Right.setVelocity(50, percent);
   Left.setVelocity(50, percent);
-  Pneumatic.set(false);
-  Arm.setPosition(0, degrees);
-  Arm.spinToPosition(600, degrees);
+  // Pneumatic.set(false);
+  // Arm.setPosition(0, degrees);
+  // Arm.spinToPosition(600, degrees);
   thread Right(R_DFThreadFunction);
-  Left.spinFor(forward, 700, degrees);
-  thread Right2(R_TRThreadFunction90);
-  Left.spinFor(reverse, 650, degrees);
-  thread Right3(R_DRLThreadFunction);
-  Left.spinFor(reverse, 800, degrees);
+  Left.spinFor(forward, 1425, degrees);
+  thread Right2(R_TRThreadFunction90); //Turns left
+  Left.spinFor(forward, 680, degrees);
+  // thread Right3(R_DRLThreadFunction);
+  // Left.spinFor(reverse, 800, degrees);
 }
 
 void userControl(){
@@ -128,8 +125,8 @@ int main() {
   RWing.setPosition(0, degrees);
   LWing.setPosition(0, degrees);
   Arm.setStopping(hold);
-  // RWing.setStopping(hold);
-  // LWing.setStopping(hold);
+  RWing.setStopping(hold);
+  LWing.setStopping(hold);
   Competition.autonomous(autonomous);
   Competition.drivercontrol(userControl);  
 }
