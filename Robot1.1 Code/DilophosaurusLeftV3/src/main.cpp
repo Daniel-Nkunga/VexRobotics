@@ -28,10 +28,10 @@ void L_TLThreadFunction90(){
   Left.spinFor(forward, 680, degrees);
 }
 void R_TLThreadFunction90(){
-  Right.spinFor(reverse, 700, degrees);
+  Right.spinFor(forward, 680, degrees);
 }
 void R_DFThreadFunction(){
-  Right.spinFor(forward, 1425, degrees);
+  Right.spinFor(forward, 4275, degrees);
 }
 void R_DRLThreadFunction(){
   Right.spinFor(reverse,1200, degrees);
@@ -71,18 +71,20 @@ void ArmLower(){
   Arm.spin(reverse);
 }
 
-void autonomous(){
+void autonomous(){ //Aiming for win point
   Right.setVelocity(50, percent);
   Left.setVelocity(50, percent);
-  // Pneumatic.set(false);
-  // Arm.setPosition(0, degrees);
-  // Arm.spinToPosition(600, degrees);
-  // thread Right(R_DFThreadFunction);
-  // Left.spinFor(forward, 1425, degrees);
-  // thread Right2(R_TRThreadFunction90); //Turns left
-  // Left.spinFor(forward, 680, degrees);
-  // thread Right3(R_DRLThreadFunction);
-  // Left.spinFor(reverse, 800, degrees);
+  Arm.setPosition(0, degrees);
+  Pneumatic.set(false);
+  thread Right(R_DFThreadFunction);
+  Left.spinFor(forward, 4275, degrees);
+  thread Right2(R_TLThreadFunction90);
+  Left.spinFor(reverse, 600, degrees);
+  Arm.spinToPosition(680, degrees);
+  thread Right3(R_DFThreadFunction);
+  Left.spinFor(forward, 1425, degrees);
+  thread Right4(R_DRLThreadFunction);
+  Left.spinFor(reverse, 1200, degrees);
 }
 
 void userControl(){

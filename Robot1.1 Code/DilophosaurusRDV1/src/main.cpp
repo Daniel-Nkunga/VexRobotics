@@ -21,22 +21,21 @@ competition Competition;
 void R_TRThreadFunction90(){
   Right.spinFor(reverse, 680, degrees);
 }
-void R_TRThreadFunction70(){
-  Right.spinFor(forward, 650, degrees);
-}
-void L_TLThreadFunction90(){
-  Left.spinFor(forward, 680, degrees);
-}
 void R_TLThreadFunction90(){
-  Right.spinFor(reverse, 700, degrees);
+  Right.spinFor(forward, 680, degrees);
 }
 void R_DFThreadFunction(){
-  Right.spinFor(forward, 1425, degrees);
+  Right.spinFor(forward, 3100, degrees);
+}
+void R_DFSThreadFunction(){
+  Right.spinFor(forward, 300, degrees);
 }
 void R_DRLThreadFunction(){
   Right.spinFor(reverse,1200, degrees);
 }
-
+void R_DRThreadFunction(){
+  Right.spinFor(reverse, 300, degrees);
+}
 void RWingOpen() {
   RWing.spin(forward);
 }
@@ -49,7 +48,14 @@ void LWingOpen() {
 void LWingClose() {
   LWing.spin(forward);
 }
-
+void speed(){
+  Right.setVelocity(80, percent);
+  Left.setVelocity(80, percent);
+}
+void slow(){
+  Right.setVelocity(25, percent);
+  Left.setVelocity(25, percent);
+}
 void LWingTaskFunction() {
   LWing.spin(forward);
 }
@@ -71,18 +77,22 @@ void ArmLower(){
   Arm.spin(reverse);
 }
 
-void autonomous(){
-  Right.setVelocity(50, percent);
-  Left.setVelocity(50, percent);
-  // Pneumatic.set(false);
-  // Arm.setPosition(0, degrees);
-  // Arm.spinToPosition(600, degrees);
-  // thread Right(R_DFThreadFunction);
-  // Left.spinFor(forward, 1425, degrees);
-  // thread Right2(R_TRThreadFunction90); //Turns left
-  // Left.spinFor(forward, 680, degrees);
-  // thread Right3(R_DRLThreadFunction);
-  // Left.spinFor(reverse, 800, degrees);
+void autonomous(){ //Aiming for win point
+  Right.setVelocity(25, percent);
+  Left.setVelocity(25, percent);
+  Arm.setPosition(0, degrees);
+  Pneumatic.set(false);
+  thread Right(R_DFThreadFunction);
+  Left.spinFor(forward, 1800, degrees);
+  speed();
+  thread Right2(R_DRThreadFunction);
+  Left.spinFor(reverse, 400, degrees);
+  thread Right3(R_DFSThreadFunction);
+  Left.spinFor(forward, 400, degrees);
+  thread Right4(R_DRLThreadFunction);
+  slow();
+  Left.spinFor(reverse, 1200, degrees);
+  Arm.spinToPosition(560, degrees);
 }
 
 void userControl(){
